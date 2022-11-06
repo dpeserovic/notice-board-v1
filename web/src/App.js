@@ -1,13 +1,22 @@
 import React from 'react';
 import MainLayout from './MainLayout';
+import { RouterContext, RouterView } from 'mobx-state-router';
+import { LoginPage, RegistrationPage } from './modules/membership/pages';
 
-function App() {
+const routeNames = {
+  login: <LoginPage />,
+  registration: <RegistrationPage />,
+}
+
+
+function App({ rootStore }) {
+  const { routerStore: { router } } = rootStore;
   return (
-    <MainLayout>
-      <>
-        Notice Board
-      </>
-    </MainLayout>
+    <RouterContext.Provider value={router}>
+      <MainLayout>
+        <RouterView viewMap={routeNames} />
+      </MainLayout>
+    </RouterContext.Provider>
   );
 }
 
