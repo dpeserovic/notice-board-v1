@@ -1,12 +1,12 @@
-class LoginViewStore {
+class RegisterViewStore {
     constructor(rootStore) {
         this.rootStore = rootStore;
         this.routerStore = this.rootStore.routerStore;
     }
 
-    goToRegister = () => {
-        this.routerStore.goTo('register');
+    goToLogin = () => {
+        this.routerStore.goTo('login');
     }
 }
 
-export default LoginViewStore;
+export default RegisterViewStore;

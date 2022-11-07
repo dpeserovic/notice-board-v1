@@ -1,11 +1,11 @@
 import React from 'react';
 import MainLayout from './MainLayout';
 import { RouterContext, RouterView } from 'mobx-state-router';
-import { LoginPage, RegistrationPage } from './modules/membership/pages';
+import { LoginPage, RegisterPage } from './modules/membership/pages';
 
 const routeNames = {
   login: <LoginPage />,
-  registration: <RegistrationPage />,
+  register: <RegisterPage />,
 }
 
 

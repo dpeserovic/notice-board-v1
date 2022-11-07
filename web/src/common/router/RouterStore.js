@@ -6,8 +6,8 @@ const routes = [
         pattern: '/login',
     },
     {
-        name: 'registration',
-        pattern: '/registration',
+        name: 'register',
+        pattern: '/register',
     },
 ]
 
@@ -22,6 +22,10 @@ class RouterStore {
     setObservingRouterStateChanges = () => {
         const historyAdapter = new HistoryAdapter(this.router, browserHistory);
         historyAdapter.observeRouterStateChanges();
+    }
+
+    goTo = (routeName, options) => {
+        this.router.goTo(routeName, options);
     }
 }
 
