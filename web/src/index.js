@@ -4,7 +4,7 @@ import App from './App';
 import './index.css';
 import { RootStore } from './common/stores';
 
-const rootStore = window.rootStore = new RootStore();
+const rootStore = window.rootStore = new RootStore('notice-board-dev');
 rootStore.routerStore.setObservingRouterStateChanges();
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
