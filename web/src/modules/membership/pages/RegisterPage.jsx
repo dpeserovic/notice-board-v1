@@ -12,6 +12,12 @@ function RegisterPage(props) {
             <Form>
                 <Row className="justify-content-md-center mb-3" md={5}>
                     <Form.Group>
+                        <Form.Label>{registerForm.$('username').label}</Form.Label>
+                        <Form.Control {...registerForm.$('username').bind()} />
+                    </Form.Group>
+                </Row>
+                <Row className="justify-content-md-center mb-3" md={5}>
+                    <Form.Group>
                         <Form.Label>{registerForm.$('email').label}</Form.Label>
                         <Form.Control {...registerForm.$('email').bind()} />
                     </Form.Group>

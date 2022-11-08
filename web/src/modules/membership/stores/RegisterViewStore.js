@@ -1,11 +1,13 @@
 import { createForm } from 'common/form';
 import { registerFormFields } from '../forms';
+import { LOGIN_ROUTE_NAME, activationUrl } from '../constants';
 
 class RegisterViewStore {
     registerForm = null;
 
     constructor(rootStore) {
         this.rootStore = rootStore;
+        this.register = this.rootStore.baasicApp.membershipModule.register;
         this.routerStore = this.rootStore.routerStore;
     }
 
@@ -13,8 +15,13 @@ class RegisterViewStore {
         this.registerForm = createForm({ fields: registerFormFields, hooks: { onSuccess: this.handleRegisterFormSuccess, onError: this.handleRegisterFormError } });
     }
 
-    handleRegisterFormSuccess = form => {
-        console.log(form);
+    handleRegisterFormSuccess = async form => {
+        try {
+            const { username, email, password, confirmPassword } = form.values();
+            const response = await this.register.create({ username, email, password, confirmPassword, activationUrl });
+        } catch (e) {
+        } finally {
+        }
     }
 
     handleRegisterFormError = form => {
@@ -22,7 +29,7 @@ class RegisterViewStore {
     }
 
     goToLogin = () => {
-        this.routerStore.goTo('login');
+        this.routerStore.goTo(LOGIN_ROUTE_NAME);
     }
 
     dispose = () => {

@@ -1,5 +1,6 @@
 import { createForm } from 'common/form';
 import { loginFormFields } from '../forms';
+import { REGISTER_ROUTE_NAME } from '../constants';
 
 class LoginViewStore {
     loginForm = null;
@@ -22,7 +23,7 @@ class LoginViewStore {
     }
 
     goToRegister = () => {
-        this.routerStore.goTo('register');
+        this.routerStore.goTo(REGISTER_ROUTE_NAME);
     }
 
     dispose = () => {
