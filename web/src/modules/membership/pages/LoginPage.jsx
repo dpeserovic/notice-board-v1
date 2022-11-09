@@ -12,8 +12,8 @@ function LoginPage(props) {
             <Form>
                 <Row className="justify-content-md-center mb-3" md={5}>
                     <Form.Group>
-                        <Form.Label>{loginForm.$('email').label}</Form.Label>
-                        <Form.Control {...loginForm.$('email').bind()} />
+                        <Form.Label>{loginForm.$('username').label}</Form.Label>
+                        <Form.Control {...loginForm.$('username').bind()} />
                     </Form.Group>
                 </Row>
                 <Row className="justify-content-md-center mb-3" md={5}>
