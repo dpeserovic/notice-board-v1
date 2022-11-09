@@ -19,13 +19,17 @@ class RegisterViewStore {
         try {
             const { username, email, password, confirmPassword } = form.values();
             const response = await this.register.create({ username, email, password, confirmPassword, activationUrl });
+            if (response.statusCode === 200) {
+                this.rootStore.notificationStore.showSuccessToast('Success');
+            }
         } catch (e) {
+            this.rootStore.notificationStore.showSuccessToast('Error');
         } finally {
         }
     }
 
     handleRegisterFormError = form => {
-        console.log(form);
+        this.rootStore.notificationStore.showErrorToast('Invalid form values');
     }
 
     goToLogin = () => {
