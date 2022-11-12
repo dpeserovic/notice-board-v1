@@ -1,8 +1,10 @@
 import { RouterStore as MobxRouterStore, createRouterState, browserHistory, HistoryAdapter } from 'mobx-state-router';
 
 let isUserLoggedIn = async (fromState, toState, routerStore) => {
-    const { options: { rootStore: { membershipModuleStore: { loginViewStore: { isUserAuthenticated } } } }, goTo } = routerStore;
-    return isUserAuthenticated ? Promise.resolve() : Promise.reject(goTo.call(routerStore, 'login'));
+    const { options: { rootStore: { membershipModuleStore: { loginViewStore } } }, goTo } = routerStore;
+    const { isUserAuthenticated, getUserData } = loginViewStore;
+    if (isUserAuthenticated && !loginViewStore.isUserInState) await getUserData();
+    return isUserAuthenticated && loginViewStore.isUserInState ? Promise.resolve() : Promise.reject(goTo.call(routerStore, 'login'));
 }
 
 const routes = [
@@ -32,7 +34,7 @@ const routes = [
     },
     {
         name: 'dashboard',
-        pattern: '/dashboard',
+        pattern: '/',
         beforeEnter: isUserLoggedIn,
     }
 ]

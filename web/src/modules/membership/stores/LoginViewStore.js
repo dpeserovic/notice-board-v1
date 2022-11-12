@@ -1,3 +1,4 @@
+import { makeObservable, observable, action, computed } from 'mobx';
 import { createForm } from 'common/form';
 import { loginFormFields } from '../forms';
 import { REGISTER_ROUTE_NAME, DASHBOARD_ROUTE_NAME, LOGIN_ROUTE_NAME } from '../constants';
@@ -10,11 +11,22 @@ class LoginViewStore {
         return this.rootStore.baasicApp.app.getUser().isAuthenticated();
     }
 
+    get isUserInState() {
+        return this.user != null;
+    }
+
     get userAccessToken() {
         return this.rootStore.baasicApp.app.getAccessToken();
     }
 
     constructor(rootStore) {
+        makeObservable(this, {
+            user: observable,
+            handleLoginFormSuccess: action,
+            getUserData: action,
+            logout: action,
+            isUserInState: computed,
+        });
         this.rootStore = rootStore;
         this.routerStore = this.rootStore.routerStore;
         this.login = this.rootStore.baasicApp.membershipModule.login;
@@ -29,15 +41,19 @@ class LoginViewStore {
             const { username, password } = form.values();
             const response = await this.login.login({ username, password });
             if (response.statusCode === 200) {
-                const userData = await this.login.loadUserData();
-                if (userData.statusCode === 200) {
-                    this.user = userData;
-                    this.goToDashboard();
-                }
+                await this.getUserData();
+                if (this.user != null) this.goToDashboard();
             }
         } catch (e) {
             this.rootStore.notificationStore.showErrorToast('Error');
         } finally {
+        }
+    }
+
+    getUserData = async () => {
+        const response = await this.login.loadUserData();
+        if (response.statusCode === 200) {
+            this.user = response.data;
         }
     }
 
@@ -50,6 +66,7 @@ class LoginViewStore {
             const { token, type } = this.userAccessToken;
             const response = await this.login.logout(token, type);
             if (response.statusCode === 204) {
+                this.user = null;
                 this.goToLogin();
             }
         } catch (e) {
