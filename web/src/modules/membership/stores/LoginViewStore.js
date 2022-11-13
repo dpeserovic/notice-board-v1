@@ -67,10 +67,12 @@ class LoginViewStore {
         try {
             const { token, type } = this.userAccessToken;
             const response = await this.login.logout(token, type);
-            if (response.statusCode === 204) {
-                this.user = null;
-                this.goToLogin();
-            }
+            runInAction(() => {
+                if (response.statusCode === 204) {
+                    this.user = null;
+                    this.goToLogin();
+                }
+            });
         } catch (e) {
         } finally {
         }
