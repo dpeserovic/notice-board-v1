@@ -1,4 +1,4 @@
-import { makeObservable, observable, action, computed } from 'mobx';
+import { makeObservable, observable, action, runInAction, computed } from 'mobx';
 import { createForm } from 'common/form';
 import { loginFormFields } from '../forms';
 import { REGISTER_ROUTE_NAME, DASHBOARD_ROUTE_NAME, LOGIN_ROUTE_NAME } from '../constants';
@@ -52,9 +52,11 @@ class LoginViewStore {
 
     getUserData = async () => {
         const response = await this.login.loadUserData();
-        if (response.statusCode === 200) {
-            this.user = response.data;
-        }
+        runInAction(() => {
+            if (response.statusCode === 200) {
+                this.user = response.data;
+            }
+        });
     }
 
     handleLoginFormError = form => {
