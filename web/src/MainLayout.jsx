@@ -4,9 +4,10 @@ import Container from 'react-bootstrap/Container';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import Nav from 'react-bootstrap/Nav';
 import { defaultTemplate } from 'common/hoc';
+import { AiOutlinePoweroff } from 'react-icons/ai';
 
 function MainLayout(props) {
-    const { membershipModuleStore: { loginViewStore: { isUserAuthenticated, isUserInState, user } }, children } = props;
+    const { membershipModuleStore: { loginViewStore: { isUserAuthenticated, isUserInState, user, logout } }, children } = props;
     const isExpanded = false;
     return (
         <>
@@ -19,7 +20,7 @@ function MainLayout(props) {
                             <Navbar.Offcanvas id={`offcanvasNavbar-expand-${isExpanded}`} aria-labelledby={`offcanvasNavbarLabel-expand-${isExpanded}`} placement="end">
                                 <Offcanvas.Header closeButton>
                                     <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${isExpanded}`}>
-                                        {user.displayName}
+                                        {`${user.displayName} [${user.roles[0].slice(0, -1).toUpperCase()}]`} <button type="button" className="btn-icon btn-icon-danger" onClick={logout}><AiOutlinePoweroff /></button>
                                     </Offcanvas.Title>
                                 </Offcanvas.Header>
                                 <Offcanvas.Body>
