@@ -1,7 +1,8 @@
 import { BaasicApp } from 'common/baasic';
 import { RouterStore } from '../router';
-import { MembershipModuleStore } from 'modules/membership/stores';
 import { LoaderStore, NotificationStore } from 'common/stores';
+import { MembershipModuleStore } from 'modules/membership/stores';
+import { DashboardViewStore } from 'modules/dashboard/stores';
 
 class RootStore {
     constructor(apiKey) {
@@ -10,6 +11,7 @@ class RootStore {
         this.globalLoaderStore = new LoaderStore();
         this.notificationStore = new NotificationStore();
         this.membershipModuleStore = new MembershipModuleStore(this);
+        this.dashboardViewStore = new DashboardViewStore(this);
     }
 }
 

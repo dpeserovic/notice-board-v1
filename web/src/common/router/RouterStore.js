@@ -36,6 +36,11 @@ const routes = [
         name: 'dashboard',
         pattern: '/',
         beforeEnter: isUserLoggedIn,
+    },
+    {
+        name: 'userManagement',
+        pattern: '/user-management',
+        beforeEnter: isUserLoggedIn,
     }
 ]
 

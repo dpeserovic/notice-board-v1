@@ -8,7 +8,7 @@ import { AiOutlinePoweroff } from 'react-icons/ai';
 import { RotatingLines } from 'react-loader-spinner';
 
 function MainLayout(props) {
-    const { membershipModuleStore: { loginViewStore: { isUserAuthenticated, isUserInState, user, logout } }, children, globalLoaderStore: { isLoading } } = props;
+    const { membershipModuleStore: { loginViewStore: { isUserAuthenticated, isUserInState, user, logout } }, children, globalLoaderStore: { isLoading }, dashboardViewStore: { goToUserManagement } } = props;
     const isExpanded = false;
     return (
         <>
@@ -26,7 +26,7 @@ function MainLayout(props) {
                                 </Offcanvas.Header>
                                 <Offcanvas.Body>
                                     <Nav className="justify-content-end flex-grow-1 pe-3">
-                                        <Nav.Link>Page 1</Nav.Link>
+                                        <Nav.Link onClick={goToUserManagement}>User management</Nav.Link>
                                         <Nav.Link>Page 2</Nav.Link>
                                         <Nav.Link>Page 3</Nav.Link>
                                         <Nav.Link>Page 4</Nav.Link>
