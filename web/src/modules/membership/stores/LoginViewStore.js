@@ -28,6 +28,7 @@ class LoginViewStore {
             isUserInState: computed,
         });
         this.rootStore = rootStore;
+        this.globalLoaderStore = this.rootStore.globalLoaderStore;
         this.routerStore = this.rootStore.routerStore;
         this.login = this.rootStore.baasicApp.membershipModule.login;
     }
@@ -38,6 +39,7 @@ class LoginViewStore {
 
     handleLoginFormSuccess = async form => {
         try {
+            this.globalLoaderStore.suspend();
             const { username, password } = form.values();
             const response = await this.login.login({ username, password });
             if (response.statusCode === 200) {
@@ -47,6 +49,7 @@ class LoginViewStore {
         } catch (e) {
             this.rootStore.notificationStore.showErrorToast('Error');
         } finally {
+            this.globalLoaderStore.resume();
         }
     }
 
@@ -65,6 +68,7 @@ class LoginViewStore {
 
     logout = async () => {
         try {
+            this.globalLoaderStore.suspend();
             const { token, type } = this.userAccessToken;
             const response = await this.login.logout(token, type);
             runInAction(() => {
@@ -74,7 +78,9 @@ class LoginViewStore {
                 }
             });
         } catch (e) {
+            this.rootStore.notificationStore.showErrorToast('Error');
         } finally {
+            this.globalLoaderStore.resume();
         }
     }
 

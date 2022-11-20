@@ -7,6 +7,7 @@ class RegisterViewStore {
 
     constructor(rootStore) {
         this.rootStore = rootStore;
+        this.globalLoaderStore = this.rootStore.globalLoaderStore;
         this.register = this.rootStore.baasicApp.membershipModule.register;
         this.routerStore = this.rootStore.routerStore;
     }
@@ -17,6 +18,7 @@ class RegisterViewStore {
 
     handleRegisterFormSuccess = async form => {
         try {
+            this.globalLoaderStore.suspend();
             const { username, email, password, confirmPassword } = form.values();
             const response = await this.register.create({ username, email, password, confirmPassword, activationUrl });
             if (response.statusCode === 200) {
@@ -25,6 +27,7 @@ class RegisterViewStore {
         } catch (e) {
             this.rootStore.notificationStore.showSuccessToast('Error');
         } finally {
+            this.globalLoaderStore.resume();
         }
     }
 

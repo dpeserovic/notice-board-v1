@@ -5,16 +5,17 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 import Nav from 'react-bootstrap/Nav';
 import { defaultTemplate } from 'common/hoc';
 import { AiOutlinePoweroff } from 'react-icons/ai';
+import { RotatingLines } from 'react-loader-spinner';
 
 function MainLayout(props) {
-    const { membershipModuleStore: { loginViewStore: { isUserAuthenticated, isUserInState, user, logout } }, children } = props;
+    const { membershipModuleStore: { loginViewStore: { isUserAuthenticated, isUserInState, user, logout } }, children, globalLoaderStore: { isLoading } } = props;
     const isExpanded = false;
     return (
         <>
             <Navbar key={isExpanded} className="mb-3" bg="danger" variant="dark" expand={isExpanded}>
                 <Container fluid>
                     <Navbar.Brand>Notice Board</Navbar.Brand>
-                    {isUserAuthenticated && isUserInState ?
+                    {isUserAuthenticated && isUserInState && !isLoading ?
                         <>
                             <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${isExpanded}`} />
                             <Navbar.Offcanvas id={`offcanvasNavbar-expand-${isExpanded}`} aria-labelledby={`offcanvasNavbarLabel-expand-${isExpanded}`} placement="end">
@@ -36,10 +37,17 @@ function MainLayout(props) {
                             </Navbar.Offcanvas>
                         </>
                         :
-                        null}
+                        null
+                    }
                 </Container>
             </Navbar>
-            {children}
+            {isLoading ?
+                <div className="center">
+                    <RotatingLines strokeColor="red" strokeWidth="2.5" animationDuration="1" width="90" visible={true} />
+                </div>
+                :
+                children
+            }
         </>
     );
 }

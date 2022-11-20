@@ -1,0 +1,1 @@
+export const DEFAULT_LOADER_STORE_DELAY = 100;
