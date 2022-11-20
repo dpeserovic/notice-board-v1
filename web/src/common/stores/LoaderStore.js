@@ -1,4 +1,4 @@
-import { makeObservable, observable, computed, action } from 'mobx';
+import { makeObservable, observable, computed, action, runInAction } from 'mobx';
 import { DEFAULT_LOADER_STORE_DELAY } from '../constants';
 
 class LoaderStore {
@@ -18,7 +18,7 @@ class LoaderStore {
     }
 
     suspend = () => {
-        this.suspendTimeout = setTimeout(() => this.loading.set(true), DEFAULT_LOADER_STORE_DELAY);
+        this.suspendTimeout = setTimeout(() => runInAction(() => this.loading.set(true)), DEFAULT_LOADER_STORE_DELAY);
     }
 
     resume = () => {
