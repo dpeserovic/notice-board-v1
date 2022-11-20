@@ -7,9 +7,9 @@ class RootStore {
     constructor(apiKey) {
         this.baasicApp = new BaasicApp(apiKey);
         this.routerStore = new RouterStore(this);
-        this.membershipModuleStore = new MembershipModuleStore(this);
         this.globalLoaderStore = new LoaderStore();
         this.notificationStore = new NotificationStore();
+        this.membershipModuleStore = new MembershipModuleStore(this);
     }
 }
 
