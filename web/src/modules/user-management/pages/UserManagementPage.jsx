@@ -1,10 +1,12 @@
 import React from 'react';
 import { defaultTemplate } from 'common/hoc';
+import { RBTable } from 'common/components';
 
-function UserManagementPage(props) {
+function UserManagementPage({ userManagementViewStore }) {
+    const { userManagementTableStore } = userManagementViewStore;
     return (
         <>
-        UserManagementPage.jsx
+        <RBTable tableStore={userManagementTableStore} />
         </>
     );
 }

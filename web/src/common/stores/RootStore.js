@@ -3,6 +3,7 @@ import { RouterStore } from '../router';
 import { LoaderStore, NotificationStore } from 'common/stores';
 import { MembershipModuleStore } from 'modules/membership/stores';
 import { DashboardViewStore } from 'modules/dashboard/stores';
+import { UserManagementViewStore } from 'modules/user-management/stores';
 
 class RootStore {
     constructor(apiKey) {
@@ -12,6 +13,7 @@ class RootStore {
         this.notificationStore = new NotificationStore();
         this.membershipModuleStore = new MembershipModuleStore(this);
         this.dashboardViewStore = new DashboardViewStore(this);
+        this.userManagementViewStore = new UserManagementViewStore(this);
     }
 }
 
